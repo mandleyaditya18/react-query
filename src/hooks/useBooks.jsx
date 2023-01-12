@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { books as booksList } from "../../db.json";
 
 const useBooks = () => {
   const [page, setPage] = useState(1);
@@ -10,6 +11,18 @@ const useBooks = () => {
     return axios
       .get(`http://localhost:4000/books?_limit=2&_page=${page}`)
       .then((result) => result.data);
+  };
+
+  const addNewBook = async (title, author) => {
+    const result = await axios.post("http://localhost:4000/books", {
+      title,
+      author,
+    });
+    return result;
+  };
+
+  const deleteBook = async (bookId) => {
+    const res = await axios.delete(`http://localhost:4000/books/${bookId}`);
   };
 
   const onSuccess = useCallback(
@@ -44,7 +57,8 @@ const useBooks = () => {
     books,
     isLoading,
     loadMoreBooks,
-    hasNextPage: page < 4,
+    addNewBook,
+    hasNextPage: booksList.length > books.length,
   };
 };
 
