@@ -13,6 +13,9 @@ const Navbar = () => {
         <li>
           <NavLink to="/books">Books</NavLink>
         </li>
+        <li>
+          <NavLink to="iq-books">IQ Books</NavLink>
+        </li>
       </ul>
     </nav>
   );
