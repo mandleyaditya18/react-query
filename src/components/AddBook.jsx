@@ -1,15 +1,15 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 
 const AddBook = ({ onSubmit }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
 
-  const submitHandler = useCallback((e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     onSubmit(title, author);
     setTitle("");
     setAuthor("");
-  });
+  };
 
   return (
     <>
@@ -27,7 +27,9 @@ const AddBook = ({ onSubmit }) => {
           onChange={(e) => setAuthor(e.target.value)}
           placeholder="Author"
         />
-        <button type="submit">Add Book</button>
+        <button type="submit" disabled={!(title.length && author.length)}>
+          Add Book
+        </button>
       </form>
     </>
   );
