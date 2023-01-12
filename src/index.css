@@ -35,3 +35,8 @@ body {
     flex-direction: column;
     gap: 16px;
 }
+
+.delete-books {
+    cursor: pointer;
+    color: red;
+}

@@ -23,6 +23,7 @@ const useInfiniteQueryBooks = () => {
     isError,
     error,
     data,
+    refetch,
     fetchNextPage,
     hasNextPage,
     isFetching,
@@ -51,6 +52,11 @@ const useInfiniteQueryBooks = () => {
     return booksList;
   });
 
+  const deleteBook = async (bookId) => {
+    await axios.delete(`http://localhost:4000/books/${bookId}`);
+    refetch();
+  };
+
   return {
     isLoading,
     isError,
@@ -62,6 +68,7 @@ const useInfiniteQueryBooks = () => {
     isFetchingNextPage,
     addNewBook,
     books,
+    deleteBook,
   };
 };
 

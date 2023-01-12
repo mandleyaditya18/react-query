@@ -4,8 +4,14 @@ import { useInfiniteQueryBooks } from "../hooks/useInfiniteQueryBooks";
 import "../index.css";
 
 const InfiniteQueryBooksList = () => {
-  const { isLoading, fetchNextPage, hasNextPage, addNewBook, books } =
-    useInfiniteQueryBooks();
+  const {
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    addNewBook,
+    books,
+    deleteBook,
+  } = useInfiniteQueryBooks();
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -16,7 +22,12 @@ const InfiniteQueryBooksList = () => {
       <div className="books-list-container">
         <h1>Books</h1>
         {books?.map((book) => (
-          <p key={book?.id}>{book?.title}</p>
+          <p key={book?.id}>
+            {book?.title}
+            <span className="delete-books" onClick={() => deleteBook(book?.id)}>
+              {" - DEL"}
+            </span>
+          </p>
         ))}
         <button onClick={fetchNextPage} disabled={!hasNextPage}>
           Load More
