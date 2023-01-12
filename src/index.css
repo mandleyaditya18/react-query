@@ -14,3 +14,7 @@ body {
 .navbar > ul > li {
     list-style-type: none;
 }
+
+.books-list-container {
+    padding: 0px 16px;
+}
