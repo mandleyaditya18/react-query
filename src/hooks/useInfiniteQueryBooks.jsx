@@ -4,9 +4,12 @@ import { books as booksList } from "../../db.json";
 import axios from "axios";
 
 const useInfiniteQueryBooks = () => {
-  const fetchInfinteQueryBooksList = ({ pageParam = 1 }) => {
+  const fetchInfinteQueryBooksList = ({
+    pageParam = 1,
+    queryKey: [, limit],
+  }) => {
     return axios
-      .get(`http://localhost:4000/books?_limit=2&_page=${pageParam}`)
+      .get(`http://localhost:4000/books?_limit=${limit}&_page=${pageParam}`)
       .then((result) => result.data);
   };
 
@@ -17,6 +20,8 @@ const useInfiniteQueryBooks = () => {
     });
     return result;
   };
+
+  const recordsPerPage = 3;
 
   const {
     isLoading,
@@ -29,11 +34,11 @@ const useInfiniteQueryBooks = () => {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    ["fetchInfinteQueryBooksList"],
+    ["fetchInfinteQueryBooksList", recordsPerPage],
     fetchInfinteQueryBooksList,
     {
       getNextPageParam: (_lastPage, pages) => {
-        if (pages.length < booksList.length / 2) {
+        if (pages.length < booksList.length / recordsPerPage) {
           return pages.length + 1;
         } else {
           return undefined;
